@@ -1,0 +1,270 @@
+body{
+    margin: 0px;
+}
+
+header{
+    text-align: center;
+}
+
+#page-container{
+    position: relative;
+    min-height: 100vh;
+}
+
+section.content{
+  padding-bottom: 5rem;
+}
+
+#navBar {
+  width: 100%;
+  height: 5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #77002e;
+}
+
+footer{
+    position: absolute;
+    position: absolute;
+    bottom:0;
+    width:100%;
+    height: 5rem;
+    background-color: #77002e;
+    display: flex;
+    flex-direction: row;
+}
+
+#navBar ul{
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  margin-left: auto;
+  align-items: baseline;
+}
+#navBar li:first-child{
+    float: left;
+    padding: 0px;
+}
+
+#navBar li {
+  margin-right: 3rem;
+}
+
+#navBar a {
+  text-decoration: none;
+  font-size: 1.5rem;
+  color: #fcb8d2;
+  font-family: "Gill Sans", sans-serif;
+}
+
+#navBar a:hover,
+#navBar a:active,
+#navBar a.active {
+  color: white;
+}
+
+.content {
+    margin-left: auto;
+    margin-right: auto;
+    width: 80%;
+    align: center;
+}
+
+h1 {
+    color: #77002e;
+    font-size: 75px;
+    font-family: "Gill Sans", sans-serif;
+}
+
+h2 {
+     padding-top: 7px;
+     color: #77002e;
+     font-size: 45px;
+     font-family: "Gill Sans", sans-serif;
+}
+p{
+    color: black;
+    font-size: 25px;
+    font-family: "Gill Sans", sans-serif;
+    border-style: solid;
+    border-width: 5px;
+    border-color: white #77002e #77002e white;
+    padding-bottom: 15px;
+}
+input[type=submit]{
+    background-color: #77002e;
+    color: #fcb8d2;
+    font-family: "Gill Sans", sans-serif;
+    font-size: 20px;
+}
+label{
+    font-family: "Gill Sans", sans-serif;
+    font-size: 20px;
+    color: #77002e;
+
+}
+form{
+    margin-top: 5%;
+    width: 50%;
+    margin-right: 25%;
+    margin-left: 25%;
+}
+textarea{
+    resize: none;
+}
+input[type=text], input[type=password], input[type=submit], textarea, input[type=file], select, input[type=number] {
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    box-sizing: border-box;
+}
+#contact-icons{
+    display: flex;
+    flex-direction: row;
+    align-items: right;
+}
+#contact-icons a{
+    color: #fcb8d2;
+    text-decoration: none;
+    font-size: 2.5em;
+    padding: 18px;
+}
+#contact-icons a:hover{
+    color: white;
+}
+#contacts dd{
+    margin-inline-start: 0px;
+}
+#contacts dt{
+    margin-inline-start: 20px;
+}
+
+#contacts dd, #contacts dt{
+    display: inline;
+}
+#contacts{
+    margin-left:60%;
+}
+#contacts a{
+    text-decoration: none;
+    font-size: 17px;
+    font-family: "Gill Sans", sans-serif;
+    color: #fcb8d2;
+}
+#contacts a:hover{
+    color: white;
+}
+#contacts dt{
+    text-decoration: none;
+    font-size: 17px;
+    font-family: "Gill Sans", sans-serif;
+    color: #fcb8d2;
+}
+
+#unableCreate a{
+    text-decoration: none;
+    color: #77002e;
+}
+#block img{
+    max-width: 50%;
+    max-height: 50%;
+}
+#block{
+    display: flex;
+    flex-direction: row;
+}
+#auction-container {
+    display: flex;
+    flex-direction: column;
+}
+#auction-container h3{
+    color: #77002e;
+    font-size: 35px;
+    font-family: "Gill Sans", sans-serif;
+}
+#auction-container p{
+    color: black;
+    font-size: 15px;
+    font-family: "Gill Sans", sans-serif;
+}
+#auction-container a{
+    text-decoration: none;
+    color: #77002e;
+    font-family: "Gill Sans", sans-serif;
+    font-size: 20px;
+}
+
+#info{
+    display: flex;
+    flex-direction: column;
+}
+#info_header h2{
+    font-size: 29px;
+    color: #fcb8d2;
+    font-family: "Gill Sans", sans-serif;
+}
+#info_header{
+    width: 61%;
+    background-color: #77002e;
+    text-align: center;
+    margin-left: 19.5%;
+    margin-right: 19.5%;
+}
+#profile_name, #profile_surname, #profile_email, #profile_phone, #profile_type {
+    display: flex;
+    flex-direction: row;
+    width: 60%;
+    border-style: solid;
+    border-width: 5px;
+    border-color: white white #77002e white;
+    margin-left: 20%;
+    margin-right: 20%;
+}
+
+#profile_name p, #profile_surname p, #profile_email p, #profile_phone p, #profile_type p{
+    border-color: white;
+    font-size: 26px;
+    margin: 12px;
+}
+
+#profile_name p:nth-of-type(1),#profile_surname p:nth-of-type(1), #profile_email p:nth-of-type(1), #profile_phone p:nth-of-type(1),  #profile_type p:nth-of-type(1) {
+    color: #77002e;
+    font-weight: bold;
+}
+#update{
+    width: 40%;
+    margin-left: 30%;
+    margin-right: 30%;
+    background-color: #77002e;
+    text-align: center;
+    margin-top: 10px;
+}
+#update a{
+    font-size: 27px;
+    color: #fcb8d2;
+    font-family: "Gill Sans", sans-serif;
+    text-decoration: none;
+}
+
+
+#my_auctions{
+    margin-left: auto;
+    margin-right: auto;
+}
+
+
+.form-btn{
+    border: 0;
+    margin: 0;
+    vertical-align: top
+}
+
+.required-field{
+    background: #fcb8d2;
+}
+
+
+

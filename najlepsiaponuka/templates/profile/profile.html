@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{% block header %}
+    <h2>{% block title %}Váš profil{% endblock %}</h2>
+{% endblock %}
+
+{% block content %}
+<div id="profil">
+    <div id="info">
+        <div id="info_header">
+            <h2>Osobné informácie</h2>
+        </div>
+        <div id="profile_name">
+            <p>Meno:</p>
+            <p> {{ current_user.name }}</p>
+        </div>
+        <div id="profile_surname">
+            <p>Priezvisko:</p>
+            <p> {{ current_user.surname }}</p>
+        </div>
+        <div id="profile_email">
+            <p>Email:</p>
+            <p> {{ current_user.email }}</p>
+        </div>
+        <div id="profile_phone">
+            <p>Telefónne číslo:</p>
+            <p> {{ current_user.phone }}</p>
+        </div>
+        <div id="update">
+            <a href="{{ url_for('update_profile') }}">Upraviť osobné údaje</a>
+        </div>
+    </div>
+
+</div>
+
+{% endblock %}

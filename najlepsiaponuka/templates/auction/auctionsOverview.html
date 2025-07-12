@@ -1,0 +1,85 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h2>Moje Aukcie</h2>
+    <table id="owned" class="table table-striped">
+        <thead>
+        <tr>
+            <th>ID aukcie</th>
+            <th>Názov aukcie</th>
+            <th>Vyvolávacia cena</th>
+            <th>Typ</th>
+            <th>Stav</th>
+            <th>Kategória</th>
+            <th>Správa</th>
+        </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+
+    <h2>Aukcie, ktorých sa účastním</h2>
+    <table id="bid" class="table table-striped">
+        <thead>
+        <tr>
+            <th>Názov aukcie</th>
+            <th>Vyvolávacia cena</th>
+            <th>Cena</th>
+            <th>Typ</th>
+            <th>Stav</th>
+            <th>Stav mojej registrácie</th>
+            <th>Kategória</th>
+            <th>Detail</th>
+        </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+{% endblock %}
+
+{% block scripts %}
+    <script>
+        $(document).ready(function () {
+            $('#owned').DataTable({
+                ajax: '/api/data/editAuctions',
+                columnDefs: [{
+                    targets: 6,
+                    data: "link",
+                    render: function (data, type, row, meta) {
+                        return '<a href=' + data + '><button>Upraviť</button></a>';
+                    }
+                }],
+                columns: [
+                    {data: "auction_id"},
+                    {data: "title"},
+                    {data: "start_price"},
+                    {data: "type"},
+                    {data: "state"},
+                    {data: "category"},
+                ],
+            });
+        });
+
+        $(document).ready(function () {
+            $('#bid').DataTable({
+                ajax: '/api/data/bidAuctions',
+                columnDefs: [{
+                    targets: 7,
+                    data: "detail",
+                    render: function (data, type, row, meta) {
+                        return '<a href=' + data + '><button>Detail</button></a>';
+                    }
+                }],
+                columns: [
+                    {data: "title"},
+                    {data: "start_price"},
+                    {data: "price"},
+                    {data: "type"},
+                    {data: "state"},
+                    {data: "registration_state"},
+                    {data: "category"},
+                ],
+            });
+        });
+    </script>
+{% endblock %}

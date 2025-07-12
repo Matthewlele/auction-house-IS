@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% from "_formhelpers.html" import render_field %}
+
+{% block header %}
+
+{% endblock %}
+
+
+
+{% block content %}
+    <form method="post">
+
+        {{ form.csrf_token }}
+
+        {{ render_field(form.name) }}
+        {{ render_field(form.surname) }}
+        {{ render_field(form.email, class="required-field") }}
+        {{ render_field(form.phone) }}
+        {{ render_field(form.password, type="password", class="required-field" )}}
+        {{ render_field(form.password_confirm, type="password", class="required-field") }}
+
+        <input type="hidden" name="referrer" value="{{ request.referrer }}">
+        <input type="submit" value="Registrovať sa">
+
+    </form>
+{% endblock %}

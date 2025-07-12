@@ -1,0 +1,77 @@
+{% extends 'base.html' %}
+
+{% block header %}
+    <h2>{% block title %}Zoznam{% endblock %}</h2>
+{% endblock %}
+
+{% block content %}
+    <table id="data" class="table table-striped">
+        <thead>
+        <tr>
+            <th></th>
+            <th>Názov aukcie</th>
+            <th>Typ</th>
+            <th>Pravidlá</th>
+            <th>Stav</th>
+            <th>Kategória</th>
+            <th>Popis</th>
+            <th>Stav registrácie</th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+{% endblock %}
+
+{% block scripts %}
+    <script>
+        $(document).ready(function () {
+            $('#data').DataTable({
+                ajax: '/api/data/auctions',
+                columnDefs: [{
+                    targets: 8,
+                    data: null,
+                    render: function (data, type, row, meta) {
+                            if(data["registered"] === "moja aukcia")
+                                return '<a href=' + data["detail"] + '><button>Detail</button></a><br>' +
+                                    '<a href=' + data["edit_link"] + '><button>Editovať</button></a>';
+                            else if(data["registered"] === "licitátor")
+                                return '<a href=' + data["detail"] + '><button>Detail</button></a><br>' +
+                                    '<a href=' + data["edit_link"] + '><button>Spravovať</button></a>';
+                            else if(data["registered"] === "neregistrovaný")
+                                return '<a href=' + data["detail"] + '><button>Detail</button></a>'
+                            else if(data["registered"] === "schvaľuje sa")
+                                return '<a href=' + data["detail"] + '><button>Detail</button></a>'
+                            else if(data["registered"] === "zamietnutá")
+                                return '<a href=' + data["detail"] + '><button>Detail</button></a>'
+                            else
+                                return '<a href=' + data["detail"] + '><button>Detail</button></a>'
+                    }
+                }],
+                columns: [
+                    {data: "image", render: getImg, orderable: false, searchable: false},
+                    {data: "title"},
+                    {data: "type"},
+                    {data: "rules"},
+                    {data: "state"},
+                    {data: "category"},
+                    {data: "description", orderable: false},
+                    {data: "registered"},
+
+
+                ],
+            });
+        });
+
+        function getImg(data, type, full, meta) {
+            var image = data;
+            if (image === null) {
+                return '<img src="/static/images/placeholder.png" size alt="AukciaObrázok" width="250" height="250"/>';
+            } else {
+                return '<img src="'+ image +'" size alt="AukciaObrázok" width="250" height="250"/>';
+            }
+        }
+
+    </script>
+{% endblock %}

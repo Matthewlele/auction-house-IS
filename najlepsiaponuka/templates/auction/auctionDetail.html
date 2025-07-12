@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+{% from "_formhelpers.html" import render_field %}
+
+{% block header %}
+    <h2>{% block title %}{{ auction.title }}{% endblock %}</h2>
+{% endblock %}
+
+{% block content %}
+    <p>{{ auction.description }}</p>
+    <p>Typ: {{ auction.type }}</p>
+    <p>Pravidlá: {{ auction.rules }}</p>
+    <p>Stav: {{ auction.state }}</p>
+    <p>Vyvolávacia cena: {{ auction.start_price }}</p>
+    {% if auction.is_closed() %}
+        <p>Finálna cena: {{ auction.price }}</p>
+        <h2>Aukcia je ukončená</h2>
+    {% else %}
+        {% if auction.is_closed() or not auction.is_rules_closed()%}
+            {% if auction.last_bid_current_users(current_user) %}
+                <p>Aktuálna cena: {{ auction.price }} [moja ponuka]</p>
+            {% else %}
+                <p>Aktuálna cena: {{ auction.price }}</p>
+            {% endif %}
+        {% endif %}
+
+        {% if current_user.is_authenticated %}
+            {% if not current_user.is_registered_on_auction(auction.auction_id) %}
+                {% if  current_user.user_id == auction.auctioneer_id %}
+                {% elif current_user.user_id == auction.creator_id %}
+                    <a href="/editAuction/{{ auction.auction_id }}"><input type="button" value="Upraviť"/></a>
+                {% else %}
+                    {% if auction.is_confirmed() %}
+                    <form action="" method="post">
+                        <button type="submit" value="register">Registrovať sa</button>
+                    </form>
+                    {% endif %}
+                {% endif %}
+
+
+            {% else %}
+                {% if not auction.did_user_bid_on_closed(current_user) %}
+                    <form action="/auctionBid/{{ auction.auction_id }}" method="post">
+                        {{ bid_form.csrf_token }}
+                        {% if auction.is_offer() %}
+                            {{ render_field(bid_form.price, step=auction.minimal_bid, min=bid_form.price.data, placeholder=auction.price) }}
+                        {% else %}
+                            {{ render_field(bid_form.price, step=auction.minimal_bid, min=0.0, max=bid_form.price.data,placeholder=auction.price) }}
+                        {% endif %}
+
+                        <input type="submit" value="Prihodiť">
+                    </form>
+                {% else %}
+                    <h2> Už ste na uzavretú aukciu prihodili čiastkou {{ auction.show_bid(current_user) }}</h2>
+                {% endif %}
+            {% endif %}
+        {% else %}
+            <div id="unableCreate">
+                <p>Aby ste sa mohli na túto aukciu registrovať musíte byť <a
+                        href="{{ url_for('login') }}">prihlásený</a>.
+                    Ak u nás ešte nemáte účet <a href="{{ url_for('register') }}">zaregistrujte sa</a> prosím.</p>
+            </div>
+        {% endif %}
+    {% endif %}
+
+
+    </form>
+{% endblock %}

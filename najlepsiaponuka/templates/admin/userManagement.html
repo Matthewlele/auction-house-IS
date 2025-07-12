@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <table id="data" class="table table-striped">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Meno</th>
+            <th>Priezvisko</th>
+            <th>Typ</th>
+            <th>Tel. číslo</th>
+            <th>Email</th>
+            <th>Správa</th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+{% endblock %}
+
+{% block scripts %}
+    <script>
+        $(document).ready(function () {
+            $('#data').DataTable({
+                ajax: '/api/data/users',
+                columnDefs: [{
+                    targets:6,
+                    data: "link",
+                    render: function (data, type, row, meta) {
+                        return '<a href=' +data+ '><button>Upraviť</button></a>';
+                    }
+                    }, {
+                    targets:7,
+                    data: "delete",
+                    render: function (data, type, row, meta) {
+                        return '<a href=' +data+ '><button>Zmazať</button></a>';
+                    }
+                }],
+                columns: [
+                    {data: "user_id"},
+                    {data: "name"},
+                    {data: "surname", searchable: false},
+                    {data: "type"},
+                    {data: "phone", orderable: false, searchable: false},
+                    {data: "email"},
+                ],
+            });
+        });
+    </script>
+{% endblock %}

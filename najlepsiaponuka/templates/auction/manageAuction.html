@@ -1,0 +1,65 @@
+{% extends 'base.html' %}
+{% from "_formhelpers.html" import render_field %}
+
+{% block header %}
+    <h2>{% block title %}Správa aukcie{% endblock %}</h2>
+{% endblock %}
+
+{% block content %}
+    <nav id="manageAuction">
+        <form method="POST">
+            {{ form.csrf_token }}
+            {{ render_field(form.state) }}
+            {{ render_field(form.start_date) }} <br><b>(formát: deň/mesiac/rok hodina:minúta:sekunda)</b>
+            <input type="submit" value="Upraviť">
+        </form>
+    </nav>
+    <h2>{% block title2 %}Správa registrácií na aukciu{% endblock %}</h2>
+    <table id="data" class="table table-striped">
+        <thead>
+        <tr>
+            <th>ID užívateľa</th>
+            <th>Meno</th>
+            <th>Priezvisko</th>
+            <th>Typ</th>
+            <th>Tel. č.</th>
+            <th>Email</th>
+            <th>Správa</th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+{% endblock %}
+
+{% block scripts %}
+    <script>
+        $(document).ready(function () {
+            $('#data').DataTable({
+                ajax: '/api/data/manageRegistrations/{{ auction.auction_id }}',
+                columnDefs: [{
+                    targets: 6,
+                    data: "allow",
+                    render: function (data, type, row, meta) {
+                        return '<a href=' + data + '><button>Povoliť</button></a>';
+                    }
+                }, {
+                    targets: 7,
+                    data: "deny",
+                    render: function (data, type, row, meta) {
+                        return '<a href=' + data + '><button>Zakázať</button></a>';
+                    }
+                }],
+                columns: [
+                    {data: "user_id"},
+                    {data: "name"},
+                    {data: "surname"},
+                    {data: "type"},
+                    {data: "phone"},
+                    {data: "email"},
+                ],
+            });
+        });
+    </script>
+{% endblock %}

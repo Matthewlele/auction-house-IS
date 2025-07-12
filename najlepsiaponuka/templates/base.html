@@ -1,0 +1,88 @@
+<!doctype html>
+<title>{% block title %}{% endblock %} NajlepsiaPonuka</title>
+
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.3/css/all.css">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.25/css/dataTables.bootstrap5.css">
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+<body>
+    <div id="page-container">
+
+        <nav id="navBar">
+            <ul id>
+                <li><a href="{{ url_for('index') }}">NajlepšiaPonuka</a>
+                <li><a href="{{ url_for('auctions_controller') }}">Aukcie</a>
+                <li><a href="{{ url_for('create_auction') }}">Vytvoriť aukciu</a>
+
+                {% if current_user.is_authenticated %}
+                    <li><span>{{ current_user.email }}</span>
+                    <li><a href="{{ url_for('my_auctions') }}">Moje aukcie</a>
+
+                    {% if current_user.is_admin() %}
+                        <li><a href="{{ url_for('auction_management') }}">Správa aukcií</a>
+                        <li><a href="{{ url_for('user_management') }}">Správa užívateľov</a>
+                    {% elif current_user.is_auctioneer() %}
+                         <li><a href="{{ url_for('auction_management') }}">Správa aukcií</a>
+                    {% endif %}
+
+                     <li><a href="{{ url_for('profile') }}">Profil</a>
+                     <li><a href="{{ url_for('logout') }}">Odhlásiť sa</a>
+
+                     {% else %}
+                            <li><a href="{{ url_for('register') }}">Registrovať sa</a>
+                            <li><a href="{{ url_for('login') }}">Prihlásiť sa</a>
+                {% endif %}
+            </ul>
+        </nav>
+
+        <div class="flash-container">
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                <ul class=flashes>
+                    {% for message in messages %}
+                        <li>{{ message }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        {% endwith %}
+        </div>
+
+        <section class="content">
+            <header>
+                {% block header %}{% endblock %}
+            </header>
+            {% block content %}{% endblock %}
+        </section>
+
+        <footer>
+            <div id="contact-icons">
+                <a href="https://www.facebook.com/">
+                    <i class="fab fa-facebook-f" aria-hidden="true"></i>
+                </a>
+                <a href="https://www.instagram.com/">
+                <i class="fab fa-instagram" aria-hidden="true"></i>
+                </a>
+                <a href="https://twitter.com/">
+                <i class="fab fa-twitter" aria-hidden="true"></i>
+               </a>
+            </div>
+            <div id="contacts">
+                <dl>
+                    <dt>Zákaznická linka:</dt>
+                    <dd>
+                        <a href="tel:123-456-789">123-456-789</a>
+                    </dd>
+                    <dt>Technická podpora:</dt>
+                    <dd>
+                        <a href="tel:987-654-321">987-654-321</a>
+                    </dd>
+                </dl>
+            </div>
+        </footer>
+    </div>
+    <script type="text/javascript" charset="utf8" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.js"></script>
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.25/js/dataTables.bootstrap5.js"></script>
+    {% block scripts %}{% endblock %}
+</body>

@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% from "_formhelpers.html" import render_field %}
+
+{% block header %}
+    <h2>{% block title %}Upravenie aukcie{% endblock %}</h2>
+{% endblock %}
+
+{% block content %}
+<nav id="editAuction">
+        <form method="post">
+            {{ form.csrf_token }}
+            {{ render_field(form.title) }}
+            {{ render_field(form.description) }}
+            {{ render_field(form.start_price, step=0.01) }}
+            {{ render_field(form.minimal_bid, step=0.01) }}
+            {{ render_field(form.rules) }}
+            {{ render_field(form.type) }}
+            {{ render_field(form.category) }}
+            {{ render_field(form.image) }}
+            <input type="submit" value="Upraviť">
+        </form>
+</nav>
+{% endblock %}

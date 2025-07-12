@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% from "_formhelpers.html" import render_field %}
+
+{% block header %}
+    <h2>{% block title %}Úprava osobných informácii{% endblock %}</h2>
+{% endblock %}
+
+{% block content %}
+    <form method="POST">
+        {{ form.csrf_token }}
+
+        {{ render_field(form.name, placeholder="staré meno: "+user.name) }}
+        {{ render_field(form.surname,  placeholder="staré priezvisko: "+user.surname) }}
+        {{ render_field(form.email,  placeholder="starý email: "+user.email) }}
+        {{ render_field(form.phone,  placeholder="staré tel. číslo: "+user.phone) }}
+        {{ render_field(form.type) }}
+        {{ render_field(form.password, type="password")}}
+        {{ render_field(form.password_confirm, type="password") }}
+
+        <input type="submit" value="Aktualizovať údaje">
+    </form>
+{% endblock %}

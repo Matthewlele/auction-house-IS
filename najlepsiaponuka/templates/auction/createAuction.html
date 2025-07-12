@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% from "_formhelpers.html" import render_field %}
+
+{% block header %}
+    <h2>{% block title %}Vytvorenie aukcie{% endblock %}</h2>
+{% endblock %}
+
+{% block content %}
+<nav id="createAuction">
+     {% if current_user.is_authenticated %}
+
+        <form method="post" enctype="multipart/form-data">
+            {{ form.csrf_token }}
+            {{ render_field(form.title, class="required-field") }}
+            {{ render_field(form.description) }}
+            {{ render_field(form.start_price, step=0.01, class="required-field") }}
+            {{ render_field(form.minimal_bid, step=0.01, class="required-field") }}
+            {{ render_field(form.rules) }}
+            {{ render_field(form.type) }}
+            {{ render_field(form.category) }}
+            {{ render_field(form.image) }}
+            <input type="submit" value="Vytvoriť">
+        </form>
+        {% else %}
+            <div id="unableCreate">
+                <p>Aby ste mohli vytvoriť aukciu musíte byť <a href="{{ url_for('login') }}">prihlásený</a>.
+                    Ak u nás ešte nemáte účet <a href="{{ url_for('register') }}">zaregistrujte sa</a> prosím.</p>
+            </div>
+    {% endif %}
+</nav>
+{% endblock %}

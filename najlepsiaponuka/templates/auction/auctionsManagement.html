@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <table id="data" class="table table-striped">
+        <thead>
+        <tr>
+            <th>ID aukcie</th>
+            <th>Názov aukcie</th>
+            <th>Vyvolávacia cena</th>
+            <th>Typ</th>
+            <th>Stav</th>
+            <th>Kategória</th>
+            <th>Správa</th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+{% endblock %}
+
+{% block scripts %}
+    <script>
+        $(document).ready(function () {
+            $('#data').DataTable({
+                ajax: '/api/data/manageAuctions',
+                columnDefs: [{
+                    targets: 6,
+                    data: "manage",
+                    render: function (data, type, row, meta) {
+                        return '<a href=' + data + '><button>Spravovať</button></a>';
+                    }
+                }, {
+                    targets: 7,
+                    data: "delete",
+                    render: function (data, type, row, meta) {
+                        return '<a href=' + data + '><button>Zmazať</button></a>';
+                    }
+                }],
+                columns: [
+                    {data: "auction_id"},
+                    {data: "title"},
+                    {data: "start_price"},
+                    {data: "type"},
+                    {data: "state"},
+                    {data: "category"},
+                ],
+            });
+        });
+    </script>
+{% endblock %}
